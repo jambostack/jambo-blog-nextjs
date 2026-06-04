@@ -1,6 +1,6 @@
 # Jambo Blog — Next.js 15 Starter
 
-A production-ready blog starter template built with **Next.js 15** (App Router) and **[Jambo CMS](https://jambostack.site)** as the headless backend.
+A production-ready blog starter template built with **Next.js 15** (App Router) and **Jambo CMS** as the headless backend.
 
 ## Features
 
@@ -80,7 +80,7 @@ npm run build && npm start
 | `pages` | list | page-title, url, content |
 | `newsletter` | list | email |
 
-Full schema reference: [docs.jambostack.site/templates/blog-nextjs](https://docs.jambostack.site/templates/blog-nextjs/)
+Full schema reference: [docs.jambostack.site/templates/blog-nextjs](https://docs.jambostack.site/templates/blog-nextjs)
 
 ## Revalidation Webhook
 
