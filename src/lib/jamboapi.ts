@@ -238,14 +238,14 @@ export async function getFeaturedPosts(): Promise<Post[]> {
 }
 
 export async function getPostBySlug(slug: string) {
-	const raw = await cmsFetch<any>(`/posts?where[url]=${slug}&first`);
+	const raw = await cmsFetch<any>(`/posts?where[url]=${encodeURIComponent(slug)}&first`);
 	if (!raw) return null;
 	const entries = Array.isArray(raw) ? raw : (raw.data ? raw.data : [raw]);
 	return mapPosts(entries.map(wrapFields))[0] ?? null;
 }
 
 export async function getPostsByCategorySlugPage(slug: string, page: number = 1, perPage: number = 9): Promise<PaginatedPosts> {
-	const res = await cmsFetch<any>(`/posts?where[categories][slug]=${slug}&sort=published_at,DESC&paginate=${perPage}&page=${page}`);
+	const res = await cmsFetch<any>(`/posts?where[categories][slug]=${encodeURIComponent(slug)}&sort=published_at,DESC&paginate=${perPage}&page=${page}`);
 	return { posts: mapPosts((res.data ?? []).map(wrapFields)), meta: res.meta };
 }
 
@@ -255,7 +255,7 @@ export async function getPostsByCategorySlug(slug: string): Promise<Post[]> {
 }
 
 export async function getPostsByTagSlugPage(slug: string, page: number = 1, perPage: number = 9): Promise<PaginatedPosts> {
-	const res = await cmsFetch<any>(`/posts?where[tags][slug]=${slug}&sort=published_at,DESC&paginate=${perPage}&page=${page}`);
+	const res = await cmsFetch<any>(`/posts?where[tags][slug]=${encodeURIComponent(slug)}&sort=published_at,DESC&paginate=${perPage}&page=${page}`);
 	return { posts: mapPosts((res.data ?? []).map(wrapFields)), meta: res.meta };
 }
 
@@ -322,7 +322,7 @@ export async function getPages(): Promise<CmsPage[]> {
 }
 
 export async function getPageBySlug(slug: string): Promise<CmsPage | null> {
-	const raw = await cmsFetch<any>(`/pages?where[url]=${slug}&first`);
+	const raw = await cmsFetch<any>(`/pages?where[url]=${encodeURIComponent(slug)}&first`);
 	if (!raw) return null;
 	const entries = Array.isArray(raw) ? raw : (raw.data ? raw.data : [raw]);
 	const item = wrapFields(entries[0]);
@@ -351,7 +351,7 @@ export interface Comment {
 }
 
 export async function getCommentsByPostId(postId: string): Promise<Comment[]> {
-	const raw = await getCollection<any>(`comments?where[post][uuid]=${postId}&sort=published_at,DESC&exclude=post`);
+	const raw = await getCollection<any>(`comments?where[post][uuid]=${encodeURIComponent(postId)}&sort=published_at,DESC&exclude=post`);
 	return raw.map((item: any) => {
 		const f = item.fields;
 		return {

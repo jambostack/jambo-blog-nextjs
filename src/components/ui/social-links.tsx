@@ -143,6 +143,15 @@ const platformLabels: Record<SocialPlatform, string> = {
 	discord: 'Discord'
 };
 
+function safeHref(url: string): string {
+	try {
+		const parsed = new URL(url);
+		return parsed.protocol === 'https:' || parsed.protocol === 'http:' ? url : '#';
+	} catch {
+		return '#';
+	}
+}
+
 export default function SocialLinks({
 	links,
 	className = "",
@@ -154,7 +163,7 @@ export default function SocialLinks({
 			{links.map((link) => (
 				<a
 					key={link.platform}
-					href={link.url}
+					href={safeHref(link.url)}
 					target="_blank"
 					rel="noopener noreferrer"
 					className={iconClassName}
